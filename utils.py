@@ -8,7 +8,7 @@ def standardize_columns(df):
     df.columns = [*STD_COLS, *df.columns[5:]]
     # clean rows with net balance
     df = df[df.TotalCost != " "]
-    # assure column have the right type
+    # assures column have the right type
     df["Date"] = pd.to_datetime(df.Date)
     return df
 
@@ -43,7 +43,7 @@ def calc_individual_cost(row: pd.Series) -> float:
 def filter_values(
     df: pd.DataFrame, currency: str = "BRL", person: str = "Lucas Neumann"
 ) -> pd.DataFrame:
-    df = df.drop(columns="Text")
+    # df = df.drop(columns="Text")
     mask = (df.Currency == currency) & (df.Person == person) & (df.Cost != 0)
     return df[mask]
 

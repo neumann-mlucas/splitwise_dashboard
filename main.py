@@ -2,8 +2,10 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-from charts import *
+from charts import plot_one, plot_two
 from utils import clean_csv
+
+st.set_page_config(layout="wide")
 
 df = None
 with st.sidebar:
@@ -36,14 +38,16 @@ with st.sidebar:
 st.title("Splitwise DashBoard")
 
 if df is not None:
-    bd = bar_by_date(df)
-    st.subheader("Expenses by Week")
-    st.altair_chart(bd, use_container_width=True)
+    po = plot_one(df.copy())
+    st.subheader("Expenses x Time")
+    st.altair_chart(po, use_container_width=True)
 
-    bt = bar_by_type(df)
-    st.subheader("Expenses by Type")
-    st.altair_chart(bt, use_container_width=True)
+    pt = plot_two(df.copy())
+    st.subheader("Expenses x Type")
+    st.altair_chart(pt, use_container_width=True)
 
-    ac = area_chart(df)
-    st.subheader("Percentage of Expenses by Type")
-    st.altair_chart(ac, use_container_width=True)
+    st.subheader("DF describe")
+    st.dataframe(df.describe(), use_container_width=True)
+
+    st.subheader("Raw DF")
+    st.dataframe(df, use_container_width=True)
